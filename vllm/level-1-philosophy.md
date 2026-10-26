@@ -91,3 +91,13 @@
 **The question.** Where should the system apply backpressure, and how should cancellation release every resource exactly once across all stages?
 
 **Philosophy:** bound every queue and propagate cancellation through output, scheduler, and KV ownership. **Warning:** an HTTP disconnect alone may leak live engine work. [Deep dive](level-2-internals.md#q10-streaming-and-cancellation) · [Lab](level-3-code-labs.md#q10-bounded-stream)
+
+## Cross-system comparisons
+
+- Q1: [Memory indirection](../library/comparisons/memory-indirection.md)
+- Q2: [Continuous batching](../library/comparisons/continuous-batching.md)
+- Q3: [Bounded work](../library/comparisons/bounded-work.md)
+- Q4: [Prefix reuse](../library/comparisons/prefix-reuse.md)
+- Q5 and Q10: [Overload and backpressure](../library/comparisons/overload-and-backpressure.md)
+- Q6: [Speculative execution](../library/comparisons/speculative-execution.md)
+- Q9: [Ownership and background work](../library/comparisons/ownership-and-background-work.md)

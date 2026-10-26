@@ -255,3 +255,9 @@ Level 1 answers one question: **when I see this shape of problem, what standard 
 **Warning:** “Redis operation is atomic” is often a true statement used to justify a false system-level conclusion.
 
 [Go deeper](level-2-internals.md#q14-atomicity-boundaries) · [Implement it](level-3-code-labs.md#q14-idempotent-command-handler)
+
+## Cross-system comparisons
+
+- Q1 and Q7: [Bounded work](../library/comparisons/bounded-work.md)
+- Q5 and Q6: [Ownership and background work](../library/comparisons/ownership-and-background-work.md)
+- Q11: [Overload and backpressure](../library/comparisons/overload-and-backpressure.md)

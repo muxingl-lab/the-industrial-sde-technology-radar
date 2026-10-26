@@ -2,6 +2,13 @@
 
 This top-level radar trains problem recognition across production systems, not product-name recall.
 
+## Choose a reading path
+
+- **Study one system:** use the [service map](#service-map) to follow its source, workflows, and code labs.
+- **Study one problem across systems:** use the [problem library](library/README.md) to compare how different software solves the same pattern under different constraints.
+
+Repeated patterns are not treated as duplicates. Their differences often reveal the real design decision: what the system owns, which resource it budgets, what it may approximate, and where it draws the correctness boundary.
+
 ## Service map
 
 | Service | System category | Status | Entry point |
@@ -9,6 +16,12 @@ This top-level radar trains problem recognition across production systems, not p
 | Redis | In-memory data platform | Redis 8.8.3 volume available | [Open Redis](redis/README.md) |
 | vLLM | High-throughput LLM inference engine | v0.32.0 volume available | [Open vLLM](vllm/README.md) |
 | SGLang | LLM serving and agent runtime | v0.5.22 volume available | [Open SGLang](sglang/README.md) |
+
+## Project guides
+
+- [Problem library](library/README.md)
+- [Cross-system comparisons](library/comparisons/README.md)
+- [Contribution guide](CONTRIBUTING.md)
 
 Every service uses the same three-depth contract:
 
@@ -33,8 +46,12 @@ Ask these before naming a technology:
 ## Repository contract
 
 ```text
-radar/
+the-industrial-sde-technology-radar/
 ├── README.md
+├── CONTRIBUTING.md
+├── library/
+│   ├── README.md
+│   └── comparisons/
 ├── redis/
 │   ├── README.md
 │   ├── level-1-philosophy.md

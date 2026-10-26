@@ -91,3 +91,12 @@
 **The question.** How should stages identify work, bound queues, propagate cancellation, and reject stale messages while preserving throughput?
 
 **Philosophy:** each stage owns one responsibility and communicates through bounded typed protocols. **Warning:** cancellation must cross tokenizer, scheduler, workers, detokenizer, and output. [Deep dive](level-2-internals.md#q10-serving-pipeline) · [Lab](level-3-code-labs.md#q10-fenced-pipeline)
+
+## Cross-system comparisons
+
+- Q1: [Prefix reuse](../library/comparisons/prefix-reuse.md)
+- Q2: [Continuous batching](../library/comparisons/continuous-batching.md)
+- Q3: [Bounded work](../library/comparisons/bounded-work.md)
+- Q7: [Speculative execution](../library/comparisons/speculative-execution.md)
+- Q9: [Memory indirection](../library/comparisons/memory-indirection.md)
+- Q10: [Ownership and background work](../library/comparisons/ownership-and-background-work.md) and [overload and backpressure](../library/comparisons/overload-and-backpressure.md)

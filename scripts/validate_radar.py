@@ -49,6 +49,10 @@ def main() -> int:
     root = Path(args.root).resolve()
     errors: list[str] = []
 
+    for required in ("README.md", "CONTRIBUTING.md", "library/README.md", "library/comparisons/README.md"):
+        if not (root / required).exists():
+            errors.append(f"missing required project file: {required}")
+
     for path in root.rglob("*.md"):
         if ".git" in path.parts:
             continue
@@ -61,7 +65,7 @@ def main() -> int:
                     f"{path.relative_to(root)}: missing anchor {target}#{anchor}"
                 )
 
-    ignored = {"references", "agents", "scripts", ".git"}
+    ignored = {"references", "agents", "scripts", "library", ".git"}
     for service in root.iterdir():
         if not service.is_dir() or service.name in ignored:
             continue
@@ -73,6 +77,25 @@ def main() -> int:
             sequences = [question_numbers(path) for path in present]
             if not all(sequence == sequences[0] for sequence in sequences[1:]):
                 errors.append(f"{service.name}: question numbers differ across levels")
+
+    library_text = (root / "library/README.md").read_text(encoding="utf-8") if (root / "library/README.md").exists() else ""
+    for level_one in root.glob("*/level-1-philosophy.md"):
+        service = level_one.parent.name
+        for line in level_one.read_text(encoding="utf-8").splitlines():
+            match = re.match(r"^## Q\d+\.\s+(.+?)\s*$", line)
+            if not match:
+                continue
+            anchor = slug(line.removeprefix("## "))
+            expected = f"../{service}/level-1-philosophy.md#{anchor}"
+            if expected not in library_text:
+                errors.append(f"library: missing {service} question #{anchor}")
+
+    comparisons_dir = root / "library/comparisons"
+    comparisons_index = (comparisons_dir / "README.md").read_text(encoding="utf-8") if comparisons_dir.exists() else ""
+    if comparisons_dir.exists():
+        for comparison in comparisons_dir.glob("*.md"):
+            if comparison.name != "README.md" and f"({comparison.name})" not in comparisons_index:
+                errors.append(f"comparison index: missing {comparison.name}")
 
     if errors:
         print("\n".join(errors), file=sys.stderr)

@@ -20,15 +20,22 @@ Each service folder must have:
 
 Every core question must link Level 1 → Level 2 → Level 3 and back. Keep question numbering and meaning identical across levels.
 
+The repository must also maintain a problem-first view:
+
+- `library/README.md` contains one catalog row per service-question pair;
+- `library/comparisons/` contains independent chapters for patterns implemented by more than one service;
+- service questions link to applicable comparison chapters, and comparisons link back to every implementation discussed.
+
 ## Workflow
 
 1. Pin an official release tag and commit. Prefer upstream source and official design documentation over commentary.
 2. Map entry points, control flow, state ownership, scheduling, memory/data structures, distributed boundaries, recovery paths, and observability.
-3. Extract transferable problem families. Merge source features that teach the same pattern; split features when their invariants differ.
+3. Extract transferable problem families. Merge source features that teach the same pattern; split features when their invariants differ. Before assigning a new question, search `library/README.md` and existing comparison chapters for semantic overlap.
 4. Write Level 1 first to test whether each question represents a reusable decision rather than product trivia. Begin with a self-contained technical context using primitive concepts such as requests, processes, queues, memory, computation, and failures. Do not require product-specific architecture or specialized domain vocabulary.
 5. Write Level 2 from verified workflows and source evidence. Include the follow-ups needed to expose shallow understanding.
 6. Write Level 3 around the smallest implementation that makes the invariant concrete. Do not present toy code as production-ready.
-7. Run `python3 scripts/validate_radar.py .` and the skill validator before delivery.
+7. Add the service-question row to the library. If another service already addresses the pattern, cross-link both questions and create or update an independent comparison chapter. Explain whether the difference is superficial, operational, or fundamental.
+8. Run `python3 scripts/validate_radar.py .` and the skill validator before delivery.
 
 Read [references/source-study.md](references/source-study.md) when researching a new system. Read [references/book-contract.md](references/book-contract.md) when adding or restructuring a volume.
 
