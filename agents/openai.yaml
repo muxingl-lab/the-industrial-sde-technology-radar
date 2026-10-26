@@ -1,0 +1,4 @@
+interface:
+  display_name: "Industrial SDE Radar Builder"
+  short_description: "Build source-driven three-level SDE volumes"
+  default_prompt: "Use $build-industrial-sde-radar to add or improve a source-driven service volume."

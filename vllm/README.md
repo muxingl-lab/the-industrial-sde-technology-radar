@@ -2,9 +2,15 @@
 
 [Radar home](../README.md)
 
-This service volume will study vLLM as a source-code case study in high-throughput LLM inference.
+Source baseline: [vLLM `v0.32.0`](https://github.com/vllm-project/vllm/tree/5df63a7203cdb9328d824a27b682e77c7b9928be), commit `5df63a7203cdb9328d824a27b682e77c7b9928be`.
 
-## Planned core problem families
+## Reading paths
+
+- [Level 1](level-1-philosophy.md) — philosophy and recognition
+- [Level 2](level-2-internals.md) — internals and interview follow-ups
+- [Level 3](level-3-code-labs.md) — implementation labs
+
+## Core problem families
 
 1. KV-cache fragmentation and PagedAttention
 2. Continuous batching and iteration-level scheduling
@@ -24,5 +30,3 @@ This service volume will study vLLM as a source-code case study in high-throughp
 - `level-1-philosophy.md`: problem recognition and system-design philosophy
 - `level-2-internals.md`: execution workflow, scheduler logic, trade-offs, and interview follow-ups
 - `level-3-code-labs.md`: simplified schedulers, cache allocators, batching simulations, and implementation exercises
-
-The three level files will be added when this service becomes the active source-study volume.

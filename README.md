@@ -7,8 +7,8 @@ This top-level radar trains problem recognition across production systems, not p
 | Service | System category | Status | Entry point |
 |---|---|---|---|
 | Redis | In-memory data platform | Redis 8.8.3 volume available | [Open Redis](redis/README.md) |
-| vLLM | High-throughput LLM inference engine | Structure ready | [Open vLLM](vllm/README.md) |
-| SGLang | LLM serving and agent runtime | Structure ready | [Open SGLang](sglang/README.md) |
+| vLLM | High-throughput LLM inference engine | v0.32.0 volume available | [Open vLLM](vllm/README.md) |
+| SGLang | LLM serving and agent runtime | v0.5.22 volume available | [Open SGLang](sglang/README.md) |
 
 Every service uses the same three-depth contract:
 

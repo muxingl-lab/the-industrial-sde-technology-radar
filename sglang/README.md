@@ -2,9 +2,15 @@
 
 [Radar home](../README.md)
 
-This service volume will study SGLang as a source-code case study in LLM serving, structured generation, and agent workloads.
+Source baseline: [SGLang `v0.5.22`](https://github.com/sgl-project/sglang/tree/baa9befa381511cd4d56f83980951e5a45fffc6d), commit `baa9befa381511cd4d56f83980951e5a45fffc6d`.
 
-## Planned core problem families
+## Reading paths
+
+- [Level 1](level-1-philosophy.md) — philosophy and recognition
+- [Level 2](level-2-internals.md) — internals and interview follow-ups
+- [Level 3](level-3-code-labs.md) — implementation labs
+
+## Core problem families
 
 1. RadixAttention and prefix/KV reuse
 2. Request scheduling and continuous batching
@@ -24,5 +30,3 @@ This service volume will study SGLang as a source-code case study in LLM serving
 - `level-1-philosophy.md`: problem recognition and system-design philosophy
 - `level-2-internals.md`: execution workflow, runtime logic, trade-offs, and interview follow-ups
 - `level-3-code-labs.md`: radix-cache, scheduler, constrained-decoding, and routing exercises
-
-The three level files will be added when this service becomes the active source-study volume.
