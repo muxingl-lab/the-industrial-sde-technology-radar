@@ -11,14 +11,28 @@ Avoid product-trivia headings such as “What does `FooManager` do?” A class o
 
 ## Level 1 contract
 
-Answer in roughly four parts:
+Level 1 starts with a **problem story**. It may be long. Prefer an ordinary situation, concrete numbers, or an unfolding failure that a capable engineer can reason about without prior knowledge of the system. Define actors, changing state, scarce resource, desired outcome, and why the obvious solution fails. Introduce domain vocabulary only after the conflict is understood.
 
-1. **Philosophy:** the general principle.
-2. **Think of:** neighboring standard patterns and systems.
-3. **System example:** where the pinned source applies it.
-4. **Warning:** the dominant limitation or failure mode.
+A strong prompt passes the outsider test: an SDE unfamiliar with Redis, vLLM, or SGLang can explain the problem in their own words before reading the answer. Avoid undefined terms such as “KV cache,” “prefill,” “decode,” “radix attention,” or internal class names in the initial framing.
 
-The reader should be able to recognize the problem family after 30–60 seconds.
+Then answer in roughly five parts:
+
+1. **Problem story:** a self-contained situation and the failed obvious approach.
+2. **Philosophy:** the general principle.
+3. **Think of:** neighboring standard patterns and systems.
+4. **System example:** where the pinned source applies it.
+5. **Warning:** the dominant limitation or failure mode.
+
+The reader should be able to recognize the problem family after 30–60 seconds and should never need Level 2 to understand the question itself.
+
+### Problem-story checklist
+
+- Can a reader understand every noun without a glossary?
+- Is the workload or sequence of events concrete?
+- Is the naive solution stated, along with why it becomes wasteful or unsafe?
+- Is the tension explicit—for example memory versus flexibility, throughput versus latency, or reuse versus correctness?
+- Does the story stop before giving away the solution?
+- Could the same story plausibly occur in another system?
 
 ## Level 2 contract
 
