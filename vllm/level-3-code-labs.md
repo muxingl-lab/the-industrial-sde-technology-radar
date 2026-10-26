@@ -2,7 +2,7 @@
 [Radar](../README.md) · [vLLM](README.md) · [Level 1](level-1-philosophy.md) · [Level 2](level-2-internals.md)
 
 ## Q1. Paged KV allocator
-[Philosophy](level-1-philosophy.md#q1-how-do-variable-length-sequences-avoid-worst-case-contiguous-allocation) · [Interview](level-2-internals.md#q1-paged-kv-cache)
+[Philosophy](level-1-philosophy.md#q1-how-can-per-request-memory-grow-without-reserving-its-maximum-size) · [Interview](level-2-internals.md#q1-paged-kv-cache)
 ```python
 def release(blocks):
     for b in blocks:
@@ -21,7 +21,7 @@ for r in running + waiting:
 Add priority aging and rollback; replay mixed prompt lengths and measure TTFT, ITL, throughput, and starvation.
 
 ## Q3. Chunked prefill
-[Philosophy](level-1-philosophy.md#q3-how-do-long-prefills-coexist-with-latency-sensitive-decode) · [Interview](level-2-internals.md#q3-chunked-prefill)
+[Philosophy](level-1-philosophy.md#q3-how-can-long-inputs-coexist-with-requests-that-need-one-quick-step) · [Interview](level-2-internals.md#q3-chunked-prefill)
 ```python
 chunk = min(req.prompt_remaining, max_chunk, budget_after_decode)
 ```
@@ -35,14 +35,14 @@ key = sha256(encode(parent_hash, tokens, model, adapter, modality, tenant_salt))
 Implement longest full-block match, refcounts, and eviction of only unreferenced blocks; test isolation.
 
 ## Q5. Admission control
-[Philosophy](level-1-philosophy.md#q5-what-happens-when-requested-work-exceeds-kv-capacity) · [Interview](level-2-internals.md#q5-admission-and-preemption)
+[Philosophy](level-1-philosophy.md#q5-what-happens-when-active-requests-need-more-accelerator-memory-than-exists) · [Interview](level-2-internals.md#q5-admission-and-preemption)
 ```python
 decision = RUN if pool.can_reserve(req.blocks) else PREEMPT if victim(req) else WAIT
 ```
 Add queue caps and preemption cooldown; inject exceptions and prove no reservation leaks.
 
 ## Q6. Speculate and verify
-[Philosophy](level-1-philosophy.md#q6-how-can-several-tokens-be-produced-per-authoritative-model-step) · [Interview](level-2-internals.md#q6-speculative-decoding)
+[Philosophy](level-1-philosophy.md#q6-how-can-cheap-predictions-reduce-calls-to-an-expensive-model) · [Interview](level-2-internals.md#q6-speculative-decoding)
 ```python
 draft = proposer(prefix, k); scores = target.score(prefix, draft); commit(verify(draft, scores))
 ```
@@ -56,7 +56,7 @@ cost = memory_overflow(plan) * INF + collective_ms(plan, topology) + imbalance(p
 Enumerate TP/PP/DP/EP plans and reject topology-crossing collectives that violate the SLO.
 
 ## Q8. Shape cache
-[Philosophy](level-1-philosophy.md#q8-how-is-repeated-gpu-launch-overhead-removed) · [Interview](level-2-internals.md#q8-execution-shapes)
+[Philosophy](level-1-philosophy.md#q8-when-should-repeated-gpu-work-be-recorded-and-replayed) · [Interview](level-2-internals.md#q8-execution-shapes)
 ```python
 return graphs[shape].replay(pad(batch, shape)) if padding_ratio < .2 else eager(batch)
 ```

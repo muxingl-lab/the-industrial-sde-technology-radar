@@ -25,7 +25,7 @@ Every core question must link Level 1 → Level 2 → Level 3 and back. Keep que
 1. Pin an official release tag and commit. Prefer upstream source and official design documentation over commentary.
 2. Map entry points, control flow, state ownership, scheduling, memory/data structures, distributed boundaries, recovery paths, and observability.
 3. Extract transferable problem families. Merge source features that teach the same pattern; split features when their invariants differ.
-4. Write Level 1 first to test whether each question represents a reusable decision rather than product trivia. Begin from a self-contained, common-sense situation; do not require the reader to know the product, architecture, or domain vocabulary in order to understand why the problem matters.
+4. Write Level 1 first to test whether each question represents a reusable decision rather than product trivia. Begin with a self-contained technical context using primitive concepts such as requests, processes, queues, memory, computation, and failures. Do not require product-specific architecture or specialized domain vocabulary.
 5. Write Level 2 from verified workflows and source evidence. Include the follow-ups needed to expose shallow understanding.
 6. Write Level 3 around the smallest implementation that makes the invariant concrete. Do not present toy code as production-ready.
 7. Run `python3 scripts/validate_radar.py .` and the skill validator before delivery.
@@ -35,7 +35,7 @@ Read [references/source-study.md](references/source-study.md) when researching a
 ## Quality boundary
 
 - Explain why the mechanism exists before how it works.
-- Treat problem definition as the most important part of Level 1. A reader should be able to restate the conflict, scarce resource, and unacceptable outcome before learning any technical term.
+- Treat problem definition as the most important part of Level 1. Explain the system's initial workflow, the change in scale or requirement, the resulting failure, and why the obvious fix is insufficient. A reader should be able to restate the conflict, scarce resource, and unacceptable outcome before learning the named solution.
 - Separate algorithmic complexity from cache, allocation, synchronization, I/O, and tail-latency costs.
 - State the authoritative owner and consistency boundary for every mutable workflow.
 - Distinguish foreground latency from total/background resource cost.
