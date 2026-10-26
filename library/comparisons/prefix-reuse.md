@@ -1,4 +1,4 @@
-# Prefix Reuse: Hashed Blocks vs. Radix Paths
+# Prefix Reuse Indexes
 
 [Comparisons](README.md) · [vLLM question](../../vllm/level-1-philosophy.md#q4-when-is-prefix-computation-safely-reusable) · [SGLang question](../../sglang/level-1-philosophy.md#q1-how-can-the-server-find-the-longest-shared-beginning-between-requests)
 
@@ -15,4 +15,3 @@ This is more than a naming difference. The block hash makes identity, distributi
 ## Selection rule
 
 Prefer content-addressed blocks when immutable block identity and block-granular allocation dominate. Prefer an explicit prefix tree when prefix branching, longest-match traversal, and cache-aware scheduling need first-class structure. Both still require a complete semantic cache key.
-

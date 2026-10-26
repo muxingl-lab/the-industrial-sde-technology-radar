@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "patterns": [
+    {
+      "id": "bounded-work",
+      "title": "Bounded Work",
+      "summary": "Split large work into resumable units and limit the resources consumed in one scheduling turn.",
+      "comparison": "comparisons/bounded-work.md",
+      "dimensions": ["work_unit", "scarce_resource", "continuation_state", "budget_signal", "starvation_policy"],
+      "members": ["redis:q1", "redis:q7", "vllm:q3", "sglang:q3"]
+    },
+    {
+      "id": "continuous-batching",
+      "title": "Continuous Batching",
+      "summary": "Rebuild shared execution work at safe boundaries as requests arrive, advance, and finish.",
+      "comparison": "comparisons/continuous-batching.md",
+      "dimensions": ["scheduling_boundary", "admission_unit", "lifecycle_owner", "allocation_transaction", "cancellation_fence"],
+      "members": ["vllm:q2", "sglang:q2"]
+    },
+    {
+      "id": "memory-indirection",
+      "title": "Memory Indirection",
+      "summary": "Separate logical positions from reusable physical storage through an explicit mapping layer.",
+      "comparison": "comparisons/memory-indirection.md",
+      "dimensions": ["allocation_unit", "mapping_owner", "fragmentation", "sharing_granularity", "rollback"],
+      "members": ["vllm:q1", "sglang:q9"]
+    },
+    {
+      "id": "overload-and-backpressure",
+      "title": "Overload and Backpressure",
+      "summary": "Bound queued work and define an explicit action when a producer outruns a constrained consumer or resource.",
+      "comparison": "comparisons/overload-and-backpressure.md",
+      "dimensions": ["capacity_unit", "pressure_boundary", "overload_action", "propagation", "debt_metric"],
+      "members": ["redis:q11", "vllm:q5", "vllm:q10", "sglang:q10"]
+    },
+    {
+      "id": "ownership-and-background-work",
+      "title": "Ownership and Background Work",
+      "summary": "Move work off the control path without creating two authoritative owners of mutable state.",
+      "comparison": "comparisons/ownership-and-background-work.md",
+      "dimensions": ["authoritative_owner", "transferred_state", "handoff_boundary", "cancellation", "stale_completion_fence"],
+      "members": ["redis:q5", "redis:q6", "vllm:q9", "sglang:q10"]
+    },
+    {
+      "id": "prefix-reuse",
+      "title": "Prefix Reuse",
+      "summary": "Index and retain reusable computation for the longest semantically valid shared request prefix.",
+      "comparison": "comparisons/prefix-reuse.md",
+      "dimensions": ["identity_key", "lookup_structure", "reuse_granularity", "lifetime", "isolation_boundary"],
+      "members": ["vllm:q4", "sglang:q1"]
+    },
+    {
+      "id": "speculative-execution",
+      "title": "Speculative Execution",
+      "summary": "Perform cheap tentative work, verify it against an authority, and commit only accepted results.",
+      "comparison": "comparisons/speculative-execution.md",
+      "dimensions": ["proposer", "authority", "verification_unit", "rollback", "depth_control"],
+      "members": ["vllm:q6", "sglang:q7"]
+    }
+  ]
+}

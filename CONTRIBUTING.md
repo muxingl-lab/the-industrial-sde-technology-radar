@@ -1,12 +1,12 @@
 # Contributing to the Industrial SDE Technology Radar
 
-This project has two indexes: services and problems. A contribution is incomplete if it updates only one.
+This project has two reader-facing indexes—services and problems—and one canonical overlap registry. A contribution is incomplete if these views disagree.
 
 ## Before you write
 
 1. Pin the official release and commit you will study.
 2. Read the active source path, tests, and official design notes.
-3. Search [the problem library](library/README.md) by problem, scarce resource, invariant, and pattern—not only by product terminology.
+3. Search [the problem library](library/README.md) and [`patterns.json`](library/patterns.json) by problem, scarce resource, invariant, and pattern—not only by product terminology.
 4. Read any related chapter in [cross-system comparisons](library/comparisons/README.md).
 
 ## Decide whether the problem is new
@@ -29,12 +29,13 @@ Classify overlap before drafting:
 3. Cover workflow, ownership, invariants, failure, and follow-ups in Level 2.
 4. Add mechanism-sized code, a handwritten extension, and a meaningful test in Level 3.
 5. Add one row to `library/README.md`. A row always represents exactly one service and one problem.
-6. Link the question to every relevant comparison chapter.
-7. Update or create a comparison when another service solves the same pattern.
+6. Give the question a stable `service:qN` identity and add it to every relevant pattern in `library/patterns.json`. Membership is not exclusive.
+7. Link the question to every relevant comparison chapter.
+8. Expand an existing N-way comparison when another service solves the same pattern. Never create service-pair permutations.
 
 ## Write a comparison chapter
 
-A comparison is not a feature table. It must answer:
+A comparison is not a feature table and does not belong to a fixed pair of services. Its declared dimensions must remain useful as the member count grows. It must answer:
 
 1. What common failure leads both systems to the pattern?
 2. What unit does each system schedule, allocate, cache, or own?
@@ -43,7 +44,19 @@ A comparison is not a feature table. It must answer:
 5. Is the difference superficial, operational, or fundamental?
 6. Under what workload would one design fail or become a poor fit?
 
-Keep comparisons independent from service chapters. Link to pinned source evidence and back to each service question.
+Keep comparisons independent from service chapters. Link to pinned source evidence and back to each registered service question. If adding a member makes the current dimensions misleading, improve the dimensions for the entire pattern instead of appending a product-specific sidebar.
+
+## Maintain the overlap graph
+
+Treat [`library/patterns.json`](library/patterns.json) as the source of truth:
+
+- one service question may join multiple patterns;
+- one pattern may contain any number of service questions;
+- one pattern has one durable comparison URL;
+- a comparison requires at least two members;
+- a member is removed only when the underlying question is removed or no longer teaches that pattern.
+
+See the [pattern schema](library/schema.md) for field definitions. The validator resolves every `service:qN` reference and rejects orphaned or duplicate registry entries.
 
 ## Validate
 
@@ -55,4 +68,3 @@ git diff --check
 ```
 
 Before submitting, read the prose at speaking pace. Remove undefined terms, fused sentences, repeated conclusions, and claims that lack source evidence.
-

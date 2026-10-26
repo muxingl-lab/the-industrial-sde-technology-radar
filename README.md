@@ -7,7 +7,7 @@ This top-level radar trains problem recognition across production systems, not p
 - **Study one system:** use the [service map](#service-map) to follow its source, workflows, and code labs.
 - **Study one problem across systems:** use the [problem library](library/README.md) to compare how different software solves the same pattern under different constraints.
 
-Repeated patterns are not treated as duplicates. Their differences often reveal the real design decision: what the system owns, which resource it budgets, what it may approximate, and where it draws the correctness boundary.
+Repeated patterns are not treated as duplicates. Their differences often reveal the real design decision: what the system owns, which resource it budgets, what it may approximate, and where it draws the correctness boundary. Overlap is stored as a many-to-many graph, so the radar can grow without creating a quadratic set of pairwise pages.
 
 ## Service map
 
@@ -21,6 +21,7 @@ Repeated patterns are not treated as duplicates. Their differences often reveal 
 
 - [Problem library](library/README.md)
 - [Cross-system comparisons](library/comparisons/README.md)
+- [Pattern registry schema](library/schema.md)
 - [Contribution guide](CONTRIBUTING.md)
 
 Every service uses the same three-depth contract:
@@ -51,6 +52,8 @@ the-industrial-sde-technology-radar/
 ├── CONTRIBUTING.md
 ├── library/
 │   ├── README.md
+│   ├── patterns.json
+│   ├── schema.md
 │   └── comparisons/
 ├── redis/
 │   ├── README.md

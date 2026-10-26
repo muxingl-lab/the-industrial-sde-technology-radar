@@ -1,4 +1,4 @@
-# Continuous Batching: vLLM vs. SGLang
+# Continuous Batching Across Serving Engines
 
 [Comparisons](README.md) · [vLLM question](../../vllm/level-1-philosophy.md#q2-how-do-asynchronous-requests-share-the-gpu-efficiently) · [SGLang question](../../sglang/level-1-philosophy.md#q2-how-are-asynchronous-requests-continuously-batched)
 
@@ -19,4 +19,3 @@ This is an operational difference, not a different core pattern. The useful comp
 ## Design test
 
 For either engine, ask what happens when allocation succeeds but scheduling fails, cancellation arrives during execution, or a worker returns after the request has finished. Those paths reveal the real ownership model.
-

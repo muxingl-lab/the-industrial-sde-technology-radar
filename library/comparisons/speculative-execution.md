@@ -1,4 +1,4 @@
-# Speculative Execution: Verification vs. Adaptive Depth
+# Speculative Execution and Control
 
 [Comparisons](README.md) · [vLLM question](../../vllm/level-1-philosophy.md#q6-how-can-cheap-predictions-reduce-calls-to-an-expensive-model) · [SGLang question](../../sglang/level-1-philosophy.md#q7-how-far-ahead-should-a-cheaper-predictor-be-allowed-to-work)
 
@@ -15,4 +15,3 @@ The difference is complementary, not competitive. Verification is the correctnes
 ## What to measure
 
 Acceptance rate alone is insufficient. Measure accepted tokens per target step, proposer time, verification time, extra memory, inter-token latency, and tail behavior. A controller should optimize net saved target cost and use hysteresis to avoid oscillation.
-

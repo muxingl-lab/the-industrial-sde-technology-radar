@@ -1,8 +1,10 @@
 # Problem Library
 
-[Radar home](../README.md) · [Comparisons](comparisons/README.md) · [Contributing](../CONTRIBUTING.md)
+[Radar home](../README.md) · [Comparisons](comparisons/README.md) · [Pattern schema](schema.md) · [Contributing](../CONTRIBUTING.md)
 
 Each row is one implementation of one problem in one service. Similar rows remain separate because the service-specific constraints matter. The comparison column connects implementations that belong to the same broader pattern.
+
+Overlap is many-to-many. A question can participate in several patterns, and every pattern can include any number of services. [`patterns.json`](patterns.json) is the canonical membership registry; comparison chapters are N-way views, never an expanding matrix of service pairs.
 
 ## Memory and representation
 
@@ -28,7 +30,7 @@ Each row is one implementation of one problem in one service. Similar rows remai
 | vLLM | [Separate lifecycle ownership from device execution](../vllm/level-1-philosophy.md#q9-who-owns-request-lifecycle-versus-device-execution) | Owner and workers | [Ownership and deferred work](comparisons/ownership-and-background-work.md) |
 | SGLang | [Continuously batch asynchronous requests](../sglang/level-1-philosophy.md#q2-how-are-asynchronous-requests-continuously-batched) | Request-state scheduling | [Continuous batching](comparisons/continuous-batching.md) |
 | SGLang | [Mix long inputs with active output streams](../sglang/level-1-philosophy.md#q3-how-can-long-inputs-share-the-gpu-with-active-output-streams) | Dynamic chunking | [Bounded work](comparisons/bounded-work.md) |
-| SGLang | [Preserve ownership across a serving pipeline](../sglang/level-1-philosophy.md#q10-how-does-a-multi-process-serving-pipeline-preserve-ownership) | Fenced staged pipeline | [Ownership and deferred work](comparisons/ownership-and-background-work.md) |
+| SGLang | [Preserve ownership across a serving pipeline](../sglang/level-1-philosophy.md#q10-how-does-a-multi-process-serving-pipeline-preserve-ownership) | Fenced staged pipeline | [Ownership and deferred work](comparisons/ownership-and-background-work.md); [overload and backpressure](comparisons/overload-and-backpressure.md) |
 
 ## Reuse, approximation, and speculation
 
@@ -62,4 +64,3 @@ Each row is one implementation of one problem in one service. Similar rows remai
 | vLLM | [Bound streaming and cancellation](../vllm/level-1-philosophy.md#q10-how-do-streaming-and-cancellation-stay-bounded) | Bounded queues and propagated abort | [Overload and backpressure](comparisons/overload-and-backpressure.md) |
 | SGLang | [Constrain output to a grammar](../sglang/level-1-philosophy.md#q6-how-is-schema-conforming-output-guaranteed) | Grammar-state token masking | — |
 | SGLang | [Route by load and cached state](../sglang/level-1-philosophy.md#q8-how-should-replicas-be-selected-when-both-load-and-cache-locality-matter) | Locality-aware routing | — |
-

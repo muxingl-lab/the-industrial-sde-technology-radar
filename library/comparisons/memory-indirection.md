@@ -1,4 +1,4 @@
-# Memory Indirection: vLLM Blocks vs. SGLang Token Slots
+# Memory Indirection Across Serving Engines
 
 [Comparisons](README.md) · [vLLM question](../../vllm/level-1-philosophy.md#q1-how-can-per-request-memory-grow-without-reserving-its-maximum-size) · [SGLang question](../../sglang/level-1-philosophy.md#q9-how-should-logical-token-positions-map-to-reusable-physical-memory-slots)
 
@@ -15,4 +15,3 @@ The difference is operational but important. A block allocator reasons about gro
 ## Shared invariant
 
 No live physical region may have an unintended owner. Allocation failure must roll back every partial mapping. Shared state must remain allocated until the last reference leaves.
-
