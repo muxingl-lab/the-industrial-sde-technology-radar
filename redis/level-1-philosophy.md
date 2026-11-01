@@ -261,3 +261,4 @@ Level 1 answers one question: **when I see this shape of problem, what standard 
 - Q1 and Q7: [Bounded work](../library/comparisons/bounded-work.md)
 - Q5 and Q6: [Ownership and background work](../library/comparisons/ownership-and-background-work.md)
 - Q11: [Overload and backpressure](../library/comparisons/overload-and-backpressure.md)
+- Q12: [Online repartitioning](../library/comparisons/online-repartitioning.md)

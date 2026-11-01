@@ -7,7 +7,7 @@
       "summary": "Split large work into resumable units and limit the resources consumed in one scheduling turn.",
       "comparison": "comparisons/bounded-work.md",
       "dimensions": ["work_unit", "scarce_resource", "continuation_state", "budget_signal", "starvation_policy"],
-      "members": ["redis:q1", "redis:q7", "vllm:q3", "sglang:q3"]
+      "members": ["redis:q1", "redis:q7", "valkey:q5", "vllm:q3", "sglang:q3"]
     },
     {
       "id": "continuous-batching",
@@ -31,7 +31,7 @@
       "summary": "Bound queued work and define an explicit action when a producer outruns a constrained consumer or resource.",
       "comparison": "comparisons/overload-and-backpressure.md",
       "dimensions": ["capacity_unit", "pressure_boundary", "overload_action", "propagation", "debt_metric"],
-      "members": ["redis:q11", "vllm:q5", "vllm:q10", "sglang:q10"]
+      "members": ["redis:q11", "valkey:q3", "vllm:q5", "vllm:q10", "sglang:q10"]
     },
     {
       "id": "ownership-and-background-work",
@@ -39,7 +39,15 @@
       "summary": "Move work off the control path without creating two authoritative owners of mutable state.",
       "comparison": "comparisons/ownership-and-background-work.md",
       "dimensions": ["authoritative_owner", "transferred_state", "handoff_boundary", "cancellation", "stale_completion_fence"],
-      "members": ["redis:q5", "redis:q6", "vllm:q9", "sglang:q10"]
+      "members": ["redis:q5", "redis:q6", "valkey:q1", "vllm:q9", "sglang:q10"]
+    },
+    {
+      "id": "online-repartitioning",
+      "title": "Online Repartitioning",
+      "summary": "Move live partition ownership through explicit transitional states while preserving one write authority and every acknowledged mutation.",
+      "comparison": "comparisons/online-repartitioning.md",
+      "dimensions": ["movement_unit", "copy_protocol", "concurrent_writes", "handoff_boundary", "failure_recovery"],
+      "members": ["redis:q12", "valkey:q4"]
     },
     {
       "id": "prefix-reuse",

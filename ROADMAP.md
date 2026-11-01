@@ -1,0 +1,116 @@
+# Roadmap
+
+[Radar home](README.md) · [Problem library](library/README.md) · [Contributing](CONTRIBUTING.md)
+
+The next volume should earn its place by adding problem-solving coverage, not by adding another recognizable name. This roadmap favors systems whose source code teaches a major family of production decisions that the current Redis, Valkey, vLLM, and SGLang volumes do not yet cover.
+
+This is a reading queue, not a delivery promise. A folder is created only when source study begins and a release and commit can be pinned.
+
+## Recommended next three
+
+### 1. PostgreSQL — transactions and database internals
+
+PostgreSQL should be next. It adds the broadest missing foundation for a backend engineer.
+
+**Problem families to extract**
+
+- How can readers observe stable data while writers continue to modify it?
+- Why does multiversion concurrency control create dead tuples, and how should vacuum reclaim them?
+- What must reach durable storage before a transaction may acknowledge success?
+- How do checkpoints trade recovery time against foreground I/O?
+- How does a planner choose among scans, joins, and indexes when its estimates are uncertain?
+- How do buffer management, page layout, and locality change an algorithm's real cost?
+- Where do transaction isolation levels prevent anomalies, and where must applications still retry?
+
+**Expected cross-links:** Redis persistence and background reclamation; RocksDB write-ahead logging; FoundationDB concurrency control; bounded background work.
+
+**Primary starting points:** [PostgreSQL source](https://github.com/postgres/postgres), [concurrency control](https://www.postgresql.org/docs/current/mvcc.html), and [write-ahead logging](https://www.postgresql.org/docs/current/wal-intro.html).
+
+### 2. Apache Kafka — ordered logs and coordinated consumers
+
+Kafka turns a familiar queue-shaped problem into a study of ordering, retention, replication, and distributed ownership.
+
+**Problem families to extract**
+
+- How should a stream be partitioned when global order is too expensive?
+- How can sequential disk I/O outperform designs built around many random updates?
+- What does a producer acknowledgment actually guarantee under broker failure?
+- How do consumer groups transfer partition ownership without concurrent processing?
+- How should offsets, retries, and side effects combine to produce useful delivery semantics?
+- Why can retention decouple producers from consumers, and when does lag become unrecoverable?
+- How do replication and leader epochs prevent stale replicas from acting as authorities?
+
+**Expected cross-links:** Redis replication history; ownership and fencing; overload and backpressure; PostgreSQL WAL; Temporal event history.
+
+**Primary starting points:** [Kafka source](https://github.com/apache/kafka) and the [official design documentation](https://kafka.apache.org/documentation/).
+
+### 3. Kubernetes — reconciliation and control planes
+
+Kubernetes adds a different architecture family: systems that repeatedly reconcile observed state toward declared intent.
+
+**Problem families to extract**
+
+- Why is a retryable reconciliation loop safer than a one-shot imperative workflow?
+- How should `spec`, `status`, identity, and generation separate intent from observation?
+- How do watches avoid polling without making missed events a correctness failure?
+- How do controllers remain idempotent when work is duplicated or restarted?
+- How should a scheduler separate filtering, scoring, reservation, and binding?
+- Why do finalizers turn deletion into a protocol rather than an instant state change?
+- How do leases, leader election, and resource versions fence stale actors?
+
+**Expected cross-links:** ownership and stale-completion fencing; Redis cluster decisions; bounded work queues; overload control; etcd watches and leases.
+
+**Primary starting points:** [Kubernetes source](https://github.com/kubernetes/kubernetes), [objects and desired state](https://kubernetes.io/docs/concepts/overview/working-with-objects/), and [controllers](https://kubernetes.io/docs/concepts/architecture/controller/).
+
+## Second wave: mechanism specialists
+
+These systems deepen one important mechanism after the first wave establishes its surrounding context.
+
+| Priority | System | What it uniquely teaches | Likely comparison patterns |
+|---|---|---|---|
+| 4 | [RocksDB](https://github.com/facebook/rocksdb) | LSM trees, memtables, SSTables, Bloom filters, compaction debt, write and space amplification | PostgreSQL WAL and cleanup; Redis representations; bounded background work |
+| 5 | [Envoy](https://github.com/envoyproxy/envoy) | Event-driven proxying, connection pools, retries, circuit breaking, load balancing, dynamic xDS configuration | Backpressure; ownership; locality-aware routing; stale configuration |
+| 6 | [Temporal](https://github.com/temporalio/temporal) | Durable execution, event-history replay, deterministic workflow code, activity retries, versioning | Kafka logs; idempotency; cancellation; stale completion; Redis atomicity boundaries |
+| 7 | [ClickHouse](https://github.com/ClickHouse/ClickHouse) | Columnar layout, vectorized execution, sparse indexing, immutable parts, background merges | RocksDB compaction; bounded work; physical representation; accelerator batching |
+| 8 | [etcd](https://github.com/etcd-io/etcd) | Raft, linearizable metadata, revisions, watches, leases, and compaction | Kubernetes control planes; Redis failure decisions; Kafka epochs and logs |
+
+The order is intentional. RocksDB exposes storage trade-offs in a compact engine. Envoy adds the network boundary every backend system eventually meets. Temporal then connects logs, retries, ownership, and application-visible side effects.
+
+## Advanced comparative volumes
+
+These are valuable after the core patterns exist. They are harder to teach well because each combines several mechanisms that deserve earlier reference chapters.
+
+| System | Why defer it | Distinctive payoff |
+|---|---|---|
+| [FoundationDB](https://github.com/apple/foundationdb) | Its transaction path, role-specialized architecture, recovery, and simulation framework require a strong distributed-systems base | Strict serializable transactions, decoupled system roles, rate control, deterministic simulation testing |
+| [DuckDB](https://github.com/duckdb/duckdb) | Its best comparisons become clearer after PostgreSQL and ClickHouse establish row, column, and distributed execution trade-offs | In-process analytics, vectorized pipelines, morsel-driven parallelism, compact execution formats |
+| [Ray](https://github.com/ray-project/ray) | Distributed task execution overlaps with schedulers, object stores, and failure recovery; the boundaries should be established first | Futures, distributed ownership, lineage reconstruction, actor lifecycle, scheduling under heterogeneous resources |
+
+## Coverage map
+
+The roadmap should produce a balanced radar rather than a database-heavy bookshelf.
+
+| Architecture family | Current anchor | Planned anchor |
+|---|---|---|
+| In-memory serving | Redis, Valkey | — |
+| AI inference scheduling | vLLM, SGLang | — |
+| Transactional database | — | PostgreSQL, then FoundationDB |
+| Durable log and streaming | — | Kafka |
+| Declarative control plane | — | Kubernetes, then etcd |
+| Embedded storage engine | — | RocksDB |
+| Network data plane | — | Envoy |
+| Durable workflow runtime | — | Temporal |
+| Analytical execution | — | ClickHouse, then DuckDB |
+| Distributed task runtime | — | Ray |
+
+## Admission rule for future candidates
+
+Before adding another name, answer five questions:
+
+1. Which important production failure can this system explain better than every current volume?
+2. Which transferable mechanism will a reader be able to recognize elsewhere?
+3. Which existing pattern will gain a meaningful comparison rather than a repeated implementation?
+4. Is the active source path small enough to trace and test at a pinned revision?
+5. Can the volume support all three levels without turning Level 1 into product vocabulary or Level 3 into copied source?
+
+If the answers are weak, keep the system in the candidate queue. Popularity alone is not coverage.

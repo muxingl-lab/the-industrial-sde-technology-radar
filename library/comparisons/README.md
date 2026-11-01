@@ -11,3 +11,4 @@ These chapters explain repeated patterns whose service-specific differences teac
 - [Speculative execution and control](speculative-execution.md)
 - [Ownership and background work](ownership-and-background-work.md)
 - [Overload and backpressure](overload-and-backpressure.md)
+- [Online repartitioning](online-repartitioning.md)

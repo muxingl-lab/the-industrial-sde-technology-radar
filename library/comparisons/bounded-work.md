@@ -1,19 +1,19 @@
 # Bounded Work Across Event Loops and Accelerators
 
-[Comparisons](README.md) · [Redis maintenance](../../redis/level-1-philosophy.md#q1-how-do-you-prevent-a-large-maintenance-operation-from-destroying-tail-latency) · [Redis expiration](../../redis/level-1-philosophy.md#q7-how-should-a-system-delete-expired-data-that-nobody-reads) · [vLLM chunking](../../vllm/level-1-philosophy.md#q3-how-can-long-inputs-coexist-with-requests-that-need-one-quick-step) · [SGLang chunking](../../sglang/level-1-philosophy.md#q3-how-can-long-inputs-share-the-gpu-with-active-output-streams)
+[Comparisons](README.md) · [Redis maintenance](../../redis/level-1-philosophy.md#q1-how-do-you-prevent-a-large-maintenance-operation-from-destroying-tail-latency) · [Redis expiration](../../redis/level-1-philosophy.md#q7-how-should-a-system-delete-expired-data-that-nobody-reads) · [Valkey field expiration](../../valkey/level-1-philosophy.md#q5-how-should-deadlines-be-indexed-for-items-nested-inside-a-larger-object) · [vLLM chunking](../../vllm/level-1-philosophy.md#q3-how-can-long-inputs-coexist-with-requests-that-need-one-quick-step) · [SGLang chunking](../../sglang/level-1-philosophy.md#q3-how-can-long-inputs-share-the-gpu-with-active-output-streams)
 
 ## Common problem
 
-One task can consume an entire latency window. Completing it in one turn improves that task's progress but blocks unrelated work. All three systems divide large work into resumable units and impose a per-iteration budget.
+One task can consume an entire latency window. Completing it in one turn improves that task's progress but blocks unrelated work. These systems divide large work into resumable units and impose a per-iteration budget.
 
 ## What changes
 
-| Dimension | Redis | vLLM | SGLang |
-|---|---|---|---|
-| Work unit | Hash buckets, expired keys, memory objects | Input tokens | Input tokens and memory-aware chunks |
-| Scarce resource | Event-loop time | GPU token budget | GPU tokens plus pool capacity |
-| Saved progress | Cursor or data-structure state | Processed-token count and cache blocks | Request state, prefix state, and pool mappings |
-| Pressure signal | Time used or stale-key ratio | Active generation latency and token budget | Running batch, memory, and dynamic chunk feedback |
+| Dimension | Redis | Valkey | vLLM | SGLang |
+|---|---|---|---|---|
+| Work unit | Hash buckets, expired keys, memory objects | Expired fields inside aggregate values | Input tokens | Input tokens and memory-aware chunks |
+| Scarce resource | Event-loop time | Event-loop time and entry visits | GPU token budget | GPU tokens plus pool capacity |
+| Saved progress | Cursor or data-structure state | Deadline buckets and earliest remaining entry | Processed-token count and cache blocks | Request state, prefix state, and pool mappings |
+| Pressure signal | Time used or stale-key ratio | Time/entry budget and remaining-expired hint | Active generation latency and token budget | Running batch, memory, and dynamic chunk feedback |
 
 ## Why the difference matters
 

@@ -14,6 +14,7 @@ Repeated patterns are not treated as duplicates. Their differences often reveal 
 | Service | System category | Status | Entry point |
 |---|---|---|---|
 | Redis | In-memory data platform | Redis 8.8.3 volume available | [Open Redis](redis/README.md) |
+| Valkey | Distributed in-memory data platform | Valkey 9.1.3 volume available | [Open Valkey](valkey/README.md) |
 | vLLM | High-throughput LLM inference engine | v0.32.0 volume available | [Open vLLM](vllm/README.md) |
 | SGLang | LLM serving and agent runtime | v0.5.22 volume available | [Open SGLang](sglang/README.md) |
 
@@ -22,6 +23,7 @@ Repeated patterns are not treated as duplicates. Their differences often reveal 
 - [Problem library](library/README.md)
 - [Cross-system comparisons](library/comparisons/README.md)
 - [Pattern registry schema](library/schema.md)
+- [Roadmap](ROADMAP.md)
 - [Contribution guide](CONTRIBUTING.md)
 
 Every service uses the same three-depth contract:
@@ -60,6 +62,8 @@ the-industrial-sde-technology-radar/
 │   ├── level-1-philosophy.md
 │   ├── level-2-internals.md
 │   └── level-3-code-labs.md
+├── valkey/
+│   └── ...same depth structure...
 ├── vllm/
 │   └── ...same depth structure...
 └── sglang/

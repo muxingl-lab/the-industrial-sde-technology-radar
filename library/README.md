@@ -25,6 +25,9 @@ Overlap is many-to-many. A question can participate in several patterns, and eve
 | Redis | [Bound pauses from large maintenance work](../redis/level-1-philosophy.md#q1-how-do-you-prevent-a-large-maintenance-operation-from-destroying-tail-latency) | Incremental work | [Bounded work](comparisons/bounded-work.md) |
 | Redis | [Run background work without corrupting owner state](../redis/level-1-philosophy.md#q6-how-can-a-mostly-single-threaded-system-safely-use-background-threads) | Single owner and handoff | [Ownership and deferred work](comparisons/ownership-and-background-work.md) |
 | Redis | [Remove expired data without full scans](../redis/level-1-philosophy.md#q7-how-should-a-system-delete-expired-data-that-nobody-reads) | Passive plus budgeted active cleanup | [Bounded work](comparisons/bounded-work.md) |
+| Valkey | [Parallelize connection work without multiplying state owners](../valkey/level-1-philosophy.md#q1-how-can-connection-work-run-in-parallel-without-giving-mutable-state-several-owners) | Adaptive owner-worker I/O | [Ownership and deferred work](comparisons/ownership-and-background-work.md) |
+| Valkey | [Hide pointer-chasing latency across independent requests](../valkey/level-1-philosophy.md#q2-when-can-batching-independent-requests-hide-memory-latency) | Staged software prefetch | — |
+| Valkey | [Index deadlines for fields inside aggregate values](../valkey/level-1-philosophy.md#q5-how-should-deadlines-be-indexed-for-items-nested-inside-a-larger-object) | Adaptive deadline index plus budgeted cleanup | [Bounded work](comparisons/bounded-work.md) |
 | vLLM | [Continuously batch asynchronous requests](../vllm/level-1-philosophy.md#q2-how-do-asynchronous-requests-share-the-gpu-efficiently) | Iteration scheduling | [Continuous batching](comparisons/continuous-batching.md) |
 | vLLM | [Mix long inputs with one-step generation](../vllm/level-1-philosophy.md#q3-how-can-long-inputs-coexist-with-requests-that-need-one-quick-step) | Chunked work | [Bounded work](comparisons/bounded-work.md) |
 | vLLM | [Separate lifecycle ownership from device execution](../vllm/level-1-philosophy.md#q9-who-owns-request-lifecycle-versus-device-execution) | Owner and workers | [Ownership and deferred work](comparisons/ownership-and-background-work.md) |
@@ -49,9 +52,11 @@ Overlap is many-to-many. A question can participate in several patterns, and eve
 | Redis | [Create a consistent snapshot while serving writes](../redis/level-1-philosophy.md#q8-how-can-an-in-memory-service-create-a-consistent-snapshot-while-continuing-to-serve-writes) | Copy-on-write snapshot | — |
 | Redis | [Compact append-only history](../redis/level-1-philosophy.md#q9-how-do-you-keep-an-append-only-history-from-growing-forever) | Rewrite and atomic generation switch | — |
 | Redis | [Resume a replica after disconnection](../redis/level-1-philosophy.md#q10-how-should-a-replica-recover-after-a-short-disconnection) | Identity, offset, bounded history | — |
-| Redis | [Repartition a live keyspace](../redis/level-1-philosophy.md#q12-how-do-you-repartition-a-live-keyspace) | Stable slots and migration states | — |
+| Redis | [Repartition a live keyspace](../redis/level-1-philosophy.md#q12-how-do-you-repartition-a-live-keyspace) | Stable slots and migration states | [Online repartitioning](comparisons/online-repartitioning.md) |
 | Redis | [Turn failure suspicion into a cluster decision](../redis/level-1-philosophy.md#q13-how-should-a-distributed-system-decide-that-a-node-has-failed) | Gossip, quorum, fencing | — |
 | Redis | [Define the true atomicity boundary](../redis/level-1-philosophy.md#q14-where-does-atomicity-actually-end) | Idempotency and outbox | — |
+| Valkey | [Receive a snapshot while retaining concurrent mutations](../valkey/level-1-philosophy.md#q3-how-can-a-replica-receive-a-large-snapshot-without-falling-behind-on-new-writes) | Dual-channel snapshot and catch-up | [Overload and backpressure](comparisons/overload-and-backpressure.md) |
+| Valkey | [Move live slot ranges as one ownership transition](../valkey/level-1-philosophy.md#q4-how-can-ownership-of-many-live-partitions-move-as-one-atomic-operation) | Snapshot, mutation stream, and fenced handoff | [Online repartitioning](comparisons/online-repartitioning.md) |
 | SGLang | [Transfer state between specialized worker fleets](../sglang/level-1-philosophy.md#q5-when-should-input-processing-and-token-generation-use-separate-worker-fleets) | Disaggregation protocol | — |
 
 ## Execution, parallelism, and output
