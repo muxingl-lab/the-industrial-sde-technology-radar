@@ -73,8 +73,27 @@ These systems deepen one important mechanism after the first wave establishes it
 | 6 | [Temporal](https://github.com/temporalio/temporal) | Durable execution, event-history replay, deterministic workflow code, activity retries, versioning | Kafka logs; idempotency; cancellation; stale completion; Redis atomicity boundaries |
 | 7 | [ClickHouse](https://github.com/ClickHouse/ClickHouse) | Columnar layout, vectorized execution, sparse indexing, immutable parts, background merges | RocksDB compaction; bounded work; physical representation; accelerator batching |
 | 8 | [etcd](https://github.com/etcd-io/etcd) | Raft, linearizable metadata, revisions, watches, leases, and compaction | Kubernetes control planes; Redis failure decisions; Kafka epochs and logs |
+| 9 | [FAISS](https://github.com/facebookresearch/faiss) | Exact and approximate vector search, inverted files, graph indexes, product quantization, and CPU/GPU execution | Approximation budgets; memory representation; batching; locality; recommendation retrieval |
 
-The order is intentional. RocksDB exposes storage trade-offs in a compact engine. Envoy adds the network boundary every backend system eventually meets. Temporal then connects logs, retries, ownership, and application-visible side effects.
+The order is intentional. RocksDB exposes storage trade-offs in a compact engine. Envoy adds the network boundary every backend system eventually meets. Temporal then connects logs, retries, ownership, and application-visible side effects. FAISS follows the foundational storage and scheduling volumes because its most useful lessons come from comparing several index families under an explicit quality budget.
+
+### FAISS study boundary
+
+FAISS deserves a volume because vector retrieval makes approximation an operational contract rather than an isolated algorithm choice.
+
+**Problem families to extract**
+
+- When is exhaustive search still the correct baseline, and how should an approximate index be evaluated against it?
+- How should a system trade recall, query latency, index-build cost, and bytes per vector?
+- Why does an inverted file reduce the search space, and how should the number of probed lists change under a latency budget?
+- When should graph traversal, coarse quantization, product quantization, or a composite index be used?
+- How do training data and distribution drift affect an index built from learned centroids or codebooks?
+- Which data should remain on the CPU or GPU, and when does transfer cost erase faster computation?
+- How should deletions, filtering, incremental additions, and index replacement work when the serving index is not a transactional database?
+
+**Expected cross-links:** Redis approximation; vLLM and SGLang memory layout and GPU batching; bounded work; adaptive representation; ClickHouse vectorized execution; recommendation candidate retrieval.
+
+**Primary starting points:** [FAISS source and overview](https://github.com/facebookresearch/faiss), the [index selection reference](https://github.com/facebookresearch/faiss/wiki/Faiss-indexes), and Meta's [GPU index architecture note](https://engineering.fb.com/2025/05/08/data-infrastructure/accelerating-gpu-indexes-in-faiss-with-nvidia-cuvs/).
 
 ## Advanced comparative volumes
 
@@ -101,6 +120,7 @@ The roadmap should produce a balanced radar rather than a database-heavy bookshe
 | Network data plane | — | Envoy |
 | Durable workflow runtime | — | Temporal |
 | Analytical execution | — | ClickHouse, then DuckDB |
+| Vector similarity search | — | FAISS |
 | Distributed task runtime | — | Ray |
 
 ## Admission rule for future candidates
