@@ -9,6 +9,18 @@ This project has two reader-facing indexes—services and problems—and one can
 3. Search [the problem library](library/README.md) and [`patterns.json`](library/patterns.json) by problem, scarce resource, invariant, and pattern—not only by product terminology.
 4. Read any related chapter in [cross-system comparisons](library/comparisons/README.md).
 
+## Promote a service through one path
+
+The roadmap is only a queue for services that do not yet have a volume. Once source study begins, use one publication mechanism:
+
+1. Create the service folder with `README.md`, all three canonical levels, and `source-map.md` when an audit needs more space.
+2. Add the service to the top-level service map.
+3. Add every stable question to the problem library.
+4. Register real overlaps in `patterns.json` and expand the corresponding N-way comparisons.
+5. Move the architecture family from planned to current in the roadmap, then remove the service's candidate entry.
+
+Do not maintain a second “candidate study,” “preview,” or roadmap-only chapter after a service folder exists. The pinned service folder is the source of truth; the other indexes point to it.
+
 ## Decide whether the problem is new
 
 Use the same question when the triggering failure and core invariant are the same, even if the products use different names. Create a new question when the reader must make a materially different decision.

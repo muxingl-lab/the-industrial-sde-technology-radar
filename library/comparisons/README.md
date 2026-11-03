@@ -12,3 +12,6 @@ These chapters explain repeated patterns whose service-specific differences teac
 - [Ownership and background work](ownership-and-background-work.md)
 - [Overload and backpressure](overload-and-backpressure.md)
 - [Online repartitioning](online-repartitioning.md)
+- [Approximation contracts](approximation-contracts.md)
+- [Atomic generation replacement](atomic-generation-replacement.md)
+- [Cross-system atomicity](cross-system-atomicity.md)

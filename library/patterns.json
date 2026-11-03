@@ -64,6 +64,30 @@
       "comparison": "comparisons/speculative-execution.md",
       "dimensions": ["proposer", "authority", "verification_unit", "rollback", "depth_control"],
       "members": ["vllm:q6", "sglang:q7"]
+    },
+    {
+      "id": "approximation-contracts",
+      "title": "Approximation Contracts",
+      "summary": "Trade exact work for bounded resources only after defining an oracle, an error metric, and an operational envelope.",
+      "comparison": "comparisons/approximation-contracts.md",
+      "dimensions": ["oracle", "error_unit", "resource_saved", "control_knob", "adversarial_case"],
+      "members": ["redis:q4", "faiss:q2"]
+    },
+    {
+      "id": "atomic-generation-replacement",
+      "title": "Atomic Generation Replacement",
+      "summary": "Build replacement state away from readers and publish one complete, validated generation through an atomic authority switch.",
+      "comparison": "comparisons/atomic-generation-replacement.md",
+      "dimensions": ["generation_artifact", "validation", "switch_authority", "reader_drain", "rollback"],
+      "members": ["redis:q9", "faiss:q8"]
+    },
+    {
+      "id": "cross-system-atomicity",
+      "title": "Cross-System Atomicity",
+      "summary": "Represent multi-system side effects as recoverable, idempotent state transitions when no shared transaction exists.",
+      "comparison": "comparisons/cross-system-atomicity.md",
+      "dimensions": ["atomic_boundary", "durable_intent", "idempotency_key", "partial_success", "reconciliation"],
+      "members": ["redis:q14", "feast:q8"]
     }
   ]
 }
