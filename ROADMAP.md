@@ -74,8 +74,9 @@ These systems deepen one important mechanism after the first wave establishes it
 | 7 | [ClickHouse](https://github.com/ClickHouse/ClickHouse) | Columnar layout, vectorized execution, sparse indexing, immutable parts, background merges | RocksDB compaction; bounded work; physical representation; accelerator batching |
 | 8 | [etcd](https://github.com/etcd-io/etcd) | Raft, linearizable metadata, revisions, watches, leases, and compaction | Kubernetes control planes; Redis failure decisions; Kafka epochs and logs |
 | 9 | [FAISS](https://github.com/facebookresearch/faiss) | Exact and approximate vector search, inverted files, graph indexes, product quantization, and CPU/GPU execution | Approximation budgets; memory representation; batching; locality; recommendation retrieval |
+| 10 | [Feast](https://github.com/feast-dev/feast) | Point-in-time training joins, offline-to-online materialization, feature metadata, freshness, and pluggable serving stores | Temporal correctness; dual writes; bounded backfills; metadata rollout; Redis serving |
 
-The order is intentional. RocksDB exposes storage trade-offs in a compact engine. Envoy adds the network boundary every backend system eventually meets. Temporal then connects logs, retries, ownership, and application-visible side effects. FAISS follows the foundational storage and scheduling volumes because its most useful lessons come from comparing several index families under an explicit quality budget.
+The order is intentional. RocksDB exposes storage trade-offs in a compact engine. Envoy adds the network boundary every backend system eventually meets. Temporal then connects logs, retries, ownership, and application-visible side effects. FAISS follows the foundational storage and scheduling volumes because its most useful lessons come from comparing several index families under an explicit quality budget. Feast comes after the storage and streaming foundations because its central lesson is how those components preserve—or fail to preserve—one feature's meaning across time and serving paths.
 
 ### FAISS study boundary
 
@@ -93,7 +94,26 @@ FAISS deserves a volume because vector retrieval makes approximation an operatio
 
 **Expected cross-links:** Redis approximation; vLLM and SGLang memory layout and GPU batching; bounded work; adaptive representation; ClickHouse vectorized execution; recommendation candidate retrieval.
 
-**Primary starting points:** [FAISS source and overview](https://github.com/facebookresearch/faiss), the [index selection reference](https://github.com/facebookresearch/faiss/wiki/Faiss-indexes), and Meta's [GPU index architecture note](https://engineering.fb.com/2025/05/08/data-infrastructure/accelerating-gpu-indexes-in-faiss-with-nvidia-cuvs/).
+**Primary starting points:** [FAISS source and overview](https://github.com/facebookresearch/faiss), the [index selection reference](https://github.com/facebookresearch/faiss/wiki/Faiss-indexes), Meta's [GPU index architecture note](https://engineering.fb.com/2025/05/08/data-infrastructure/accelerating-gpu-indexes-in-faiss-with-nvidia-cuvs/), and the completed [candidate study](references/candidate-studies/faiss.md).
+
+### Feast study boundary
+
+Feast deserves a volume because a production feature is not just a column. It is a time-dependent contract that must retain its meaning across historical training, materialization, streaming updates, and low-latency serving.
+
+**Problem families to extract**
+
+- How can training reconstruct what was knowable at each historical decision time without leaking future data?
+- Why must a system distinguish event time from the time a value was created or ingested?
+- How can one feature definition drive both offline retrieval and online serving without hiding backend differences?
+- How should materialization record progress and recover when only part of an interval reaches the online store?
+- What should happen when an older feature update arrives after a newer value has already been served?
+- Where should transformations run when precomputation improves latency but on-demand work improves freshness?
+- How should metadata definitions and physical storage roll out when they cannot commit together?
+- How should a push operation recover when its online and offline writes do not succeed together?
+
+**Expected cross-links:** Redis and Valkey online serving; bounded work; ownership and atomicity boundaries; Kafka event transport; PostgreSQL temporal visibility; Kubernetes reconciliation; FAISS-backed vector retrieval.
+
+**Primary starting points:** [Feast source](https://github.com/feast-dev/feast), the [architecture overview](https://docs.feast.dev/getting-started/architecture/overview), and the completed [candidate study](references/candidate-studies/feast.md).
 
 ## Advanced comparative volumes
 
@@ -121,6 +141,7 @@ The roadmap should produce a balanced radar rather than a database-heavy bookshe
 | Durable workflow runtime | — | Temporal |
 | Analytical execution | — | ClickHouse, then DuckDB |
 | Vector similarity search | — | FAISS |
+| ML feature platform | — | Feast |
 | Distributed task runtime | — | Ray |
 
 ## Admission rule for future candidates
