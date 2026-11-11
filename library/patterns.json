@@ -23,7 +23,7 @@
       "summary": "Separate logical positions from reusable physical storage through an explicit mapping layer.",
       "comparison": "comparisons/memory-indirection.md",
       "dimensions": ["allocation_unit", "mapping_owner", "fragmentation", "sharing_granularity", "rollback"],
-      "members": ["vllm:q1", "sglang:q9"]
+      "members": ["vllm:q1", "sglang:q9", "onnxruntime:q5"]
     },
     {
       "id": "overload-and-backpressure",
@@ -71,7 +71,7 @@
       "summary": "Trade exact work for bounded resources only after defining an oracle, an error metric, and an operational envelope.",
       "comparison": "comparisons/approximation-contracts.md",
       "dimensions": ["oracle", "error_unit", "resource_saved", "control_knob", "adversarial_case"],
-      "members": ["redis:q4", "faiss:q2"]
+      "members": ["redis:q4", "faiss:q2", "onnxruntime:q9"]
     },
     {
       "id": "atomic-generation-replacement",
@@ -79,7 +79,7 @@
       "summary": "Build replacement state away from readers and publish one complete, validated generation through an atomic authority switch.",
       "comparison": "comparisons/atomic-generation-replacement.md",
       "dimensions": ["generation_artifact", "validation", "switch_authority", "reader_drain", "rollback"],
-      "members": ["redis:q9", "faiss:q8"]
+      "members": ["redis:q9", "faiss:q8", "onnxruntime:q10"]
     },
     {
       "id": "cross-system-atomicity",

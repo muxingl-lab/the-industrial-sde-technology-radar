@@ -17,6 +17,7 @@ Repeated patterns are not treated as duplicates. Their differences often reveal 
 | Valkey | Distributed in-memory data platform | Valkey 9.1.3 volume available | [Open Valkey](valkey/README.md) |
 | FAISS | Vector similarity search library | v1.15.1 volume available | [Open FAISS](faiss/README.md) |
 | Feast | ML feature platform | v0.67.0 volume available | [Open Feast](feast/README.md) |
+| ONNX Runtime | Heterogeneous model inference runtime | v1.31.1 volume available | [Open ONNX Runtime](onnxruntime/README.md) |
 | vLLM | High-throughput LLM inference engine | v0.32.0 volume available | [Open vLLM](vllm/README.md) |
 | SGLang | LLM serving and agent runtime | v0.5.22 volume available | [Open SGLang](sglang/README.md) |
 
@@ -69,6 +70,8 @@ the-industrial-sde-technology-radar/
 ├── faiss/
 │   └── ...same depth structure plus source map...
 ├── feast/
+│   └── ...same depth structure plus source map...
+├── onnxruntime/
 │   └── ...same depth structure plus source map...
 ├── vllm/
 │   └── ...same depth structure...

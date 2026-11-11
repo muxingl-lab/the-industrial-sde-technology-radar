@@ -18,6 +18,8 @@ Overlap is many-to-many. A question can participate in several patterns, and eve
 | SGLang | [Map logical token positions to physical slots](../sglang/level-1-philosophy.md#q9-how-should-logical-token-positions-map-to-reusable-physical-memory-slots) | Pool indirection | [Memory indirection](comparisons/memory-indirection.md) |
 | SGLang | [Place reusable state across memory tiers](../sglang/level-1-philosophy.md#q4-how-should-reusable-model-state-move-across-gpu-host-memory-and-storage) | Hierarchical caching | — |
 | FAISS | [Compress vectors without losing required ranking quality](../faiss/level-1-philosophy.md#q5-when-should-vectors-be-compressed-and-how-should-quantization-loss-be-measured) | Product quantization | — |
+| ONNX Runtime | [Reuse intermediate memory from tensor lifetimes](../onnxruntime/level-1-philosophy.md#q5-how-can-intermediate-tensors-share-memory-without-overwriting-live-values) | Liveness-based buffer planning | [Memory indirection](comparisons/memory-indirection.md) |
+| ONNX Runtime | [Amortize allocation without hiding retained memory](../onnxruntime/level-1-philosophy.md#q6-when-does-an-arena-allocator-help-and-when-does-it-hide-memory-debt) | Best-fit arena with coalescing | — |
 
 ## Scheduling and latency
 
@@ -37,6 +39,8 @@ Overlap is many-to-many. A question can participate in several patterns, and eve
 | SGLang | [Preserve ownership across a serving pipeline](../sglang/level-1-philosophy.md#q10-how-does-a-multi-process-serving-pipeline-preserve-ownership) | Fenced staged pipeline | [Ownership and deferred work](comparisons/ownership-and-background-work.md); [overload and backpressure](comparisons/overload-and-backpressure.md) |
 | FAISS | [Place search across CPU and GPU](../faiss/level-1-philosophy.md#q7-when-should-search-state-live-on-cpu-versus-gpu) | End-to-end placement model | — |
 | Feast | [Resume offline-to-online materialization](../feast/level-1-philosophy.md#q3-how-should-a-large-offline-to-online-materialization-survive-interruption) | Replayable interval checkpoints | — |
+| ONNX Runtime | [Control nested runtime parallelism](../onnxruntime/level-1-philosophy.md#q7-how-should-a-runtime-use-parallelism-without-multiplying-runnable-threads) | Process-wide parallelism budget | — |
+| ONNX Runtime | [Preserve dependencies across asynchronous devices](../onnxruntime/level-1-philosophy.md#q8-how-should-dependencies-remain-correct-when-device-work-finishes-asynchronously) | Event-fenced logical streams | — |
 
 ## Reuse, approximation, and speculation
 
@@ -47,6 +51,8 @@ Overlap is many-to-many. A question can participate in several patterns, and eve
 | FAISS | [Budget recall, latency, and bytes](../faiss/level-1-philosophy.md#q2-how-should-a-service-budget-recall-latency-and-bytes-per-vector) | ANN quality contract | [Approximation contracts](comparisons/approximation-contracts.md) |
 | FAISS | [Prune candidates with inverted lists](../faiss/level-1-philosophy.md#q3-how-can-an-inverted-index-search-less-data-while-retaining-a-quality-control) | Coarse routing and bounded probes | — |
 | FAISS | [Explore candidates through a proximity graph](../faiss/level-1-philosophy.md#q4-when-should-graph-traversal-replace-scanning-candidate-lists) | Bounded best-first traversal | — |
+| ONNX Runtime | [Rewrite a computation graph safely](../onnxruntime/level-1-philosophy.md#q2-how-can-a-runtime-rewrite-a-computation-graph-without-changing-its-result) | Ordered semantics-preserving transforms | — |
+| ONNX Runtime | [Reduce precision under a quality contract](../onnxruntime/level-1-philosophy.md#q9-when-is-reduced-numerical-precision-an-acceptable-execution-plan) | Calibrated quantization | [Approximation contracts](comparisons/approximation-contracts.md) |
 | vLLM | [Reuse shared-prefix computation safely](../vllm/level-1-philosophy.md#q4-when-is-prefix-computation-safely-reusable) | Content-addressed blocks | [Prefix reuse](comparisons/prefix-reuse.md) |
 | vLLM | [Verify cheap multi-token predictions](../vllm/level-1-philosophy.md#q6-how-can-cheap-predictions-reduce-calls-to-an-expensive-model) | Speculate and verify | [Speculative execution](comparisons/speculative-execution.md) |
 | SGLang | [Find the longest shared request prefix](../sglang/level-1-philosophy.md#q1-how-can-the-server-find-the-longest-shared-beginning-between-requests) | Radix-tree reuse | [Prefix reuse](comparisons/prefix-reuse.md) |
@@ -59,6 +65,8 @@ Overlap is many-to-many. A question can participate in several patterns, and eve
 | Redis | [Create a consistent snapshot while serving writes](../redis/level-1-philosophy.md#q8-how-can-an-in-memory-service-create-a-consistent-snapshot-while-continuing-to-serve-writes) | Copy-on-write snapshot | — |
 | Redis | [Compact append-only history](../redis/level-1-philosophy.md#q9-how-do-you-keep-an-append-only-history-from-growing-forever) | Rewrite and atomic generation switch | — |
 | FAISS | [Publish a rebuilt index generation](../faiss/level-1-philosophy.md#q8-how-should-a-serving-system-replace-a-rebuilt-index-without-exposing-a-partial-generation) | Build, validate, and atomic switch | [Atomic generation replacement](comparisons/atomic-generation-replacement.md) |
+| ONNX Runtime | [Validate a portable graph before execution](../onnxruntime/level-1-philosophy.md#q1-how-can-a-runtime-reject-an-incompatible-computation-graph-before-it-reaches-hardware) | Versioned graph contract | — |
+| ONNX Runtime | [Prepare and publish a session generation](../onnxruntime/level-1-philosophy.md#q10-how-should-a-service-keep-model-preparation-off-the-first-live-request) | Ahead-of-time preparation and atomic activation | [Atomic generation replacement](comparisons/atomic-generation-replacement.md) |
 | Redis | [Resume a replica after disconnection](../redis/level-1-philosophy.md#q10-how-should-a-replica-recover-after-a-short-disconnection) | Identity, offset, bounded history | — |
 | Redis | [Repartition a live keyspace](../redis/level-1-philosophy.md#q12-how-do-you-repartition-a-live-keyspace) | Stable slots and migration states | [Online repartitioning](comparisons/online-repartitioning.md) |
 | Redis | [Turn failure suspicion into a cluster decision](../redis/level-1-philosophy.md#q13-how-should-a-distributed-system-decide-that-a-node-has-failed) | Gossip, quorum, fencing | — |
@@ -86,3 +94,5 @@ Overlap is many-to-many. A question can participate in several patterns, and eve
 | SGLang | [Constrain output to a grammar](../sglang/level-1-philosophy.md#q6-how-is-schema-conforming-output-guaranteed) | Grammar-state token masking | — |
 | SGLang | [Route by load and cached state](../sglang/level-1-philosophy.md#q8-how-should-replicas-be-selected-when-both-load-and-cache-locality-matter) | Locality-aware routing | — |
 | FAISS | [Retrain when the data distribution changes](../faiss/level-1-philosophy.md#q6-how-should-training-data-and-distribution-drift-affect-an-index) | Versioned trained artifact | — |
+| ONNX Runtime | [Partition one graph across execution backends](../onnxruntime/level-1-philosophy.md#q3-how-should-one-graph-be-divided-across-backends-with-different-capabilities) | Capability-driven provider partitioning | — |
+| ONNX Runtime | [Make device transfers explicit](../onnxruntime/level-1-philosophy.md#q4-how-do-you-stop-device-transfers-from-erasing-accelerator-gains) | Transfer-aware placement and I/O binding | — |

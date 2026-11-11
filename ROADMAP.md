@@ -2,7 +2,7 @@
 
 [Radar home](README.md) · [Problem library](library/README.md) · [Contributing](CONTRIBUTING.md)
 
-The next volume should earn its place by adding problem-solving coverage, not by adding another recognizable name. This roadmap favors systems whose source code teaches a major family of production decisions that the current Redis, Valkey, FAISS, Feast, vLLM, and SGLang volumes do not yet cover.
+The next volume should earn its place by adding problem-solving coverage, not by adding another recognizable name. This roadmap favors systems whose source code teaches a major family of production decisions that the current Redis, Valkey, FAISS, Feast, ONNX Runtime, vLLM, and SGLang volumes do not yet cover.
 
 This is a reading queue, not a delivery promise. A folder is created only when source study begins and a release and commit can be pinned.
 
@@ -103,6 +103,7 @@ The roadmap should produce a balanced radar rather than a database-heavy bookshe
 | Analytical execution | — | ClickHouse, then DuckDB |
 | Vector similarity search | FAISS | — |
 | ML feature platform | Feast | — |
+| Heterogeneous model runtime | ONNX Runtime | — |
 | Distributed task runtime | — | Ray |
 
 ## Admission rule for future candidates
