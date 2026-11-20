@@ -15,3 +15,5 @@ These chapters explain repeated patterns whose service-specific differences teac
 - [Approximation contracts](approximation-contracts.md)
 - [Atomic generation replacement](atomic-generation-replacement.md)
 - [Cross-system atomicity](cross-system-atomicity.md)
+- [Consistent snapshots](consistent-snapshots.md)
+- [Temporal correctness](temporal-correctness.md)

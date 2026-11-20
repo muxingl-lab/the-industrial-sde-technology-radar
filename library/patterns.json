@@ -31,7 +31,7 @@
       "summary": "Bound queued work and define an explicit action when a producer outruns a constrained consumer or resource.",
       "comparison": "comparisons/overload-and-backpressure.md",
       "dimensions": ["capacity_unit", "pressure_boundary", "overload_action", "propagation", "debt_metric"],
-      "members": ["redis:q11", "valkey:q3", "vllm:q5", "vllm:q10", "sglang:q10"]
+      "members": ["redis:q11", "valkey:q3", "vllm:q5", "vllm:q10", "sglang:q10", "flink:q6"]
     },
     {
       "id": "ownership-and-background-work",
@@ -39,7 +39,7 @@
       "summary": "Move work off the control path without creating two authoritative owners of mutable state.",
       "comparison": "comparisons/ownership-and-background-work.md",
       "dimensions": ["authoritative_owner", "transferred_state", "handoff_boundary", "cancellation", "stale_completion_fence"],
-      "members": ["redis:q5", "redis:q6", "valkey:q1", "vllm:q9", "sglang:q10"]
+      "members": ["redis:q5", "redis:q6", "valkey:q1", "vllm:q9", "sglang:q10", "flink:q7"]
     },
     {
       "id": "online-repartitioning",
@@ -87,7 +87,23 @@
       "summary": "Represent multi-system side effects as recoverable, idempotent state transitions when no shared transaction exists.",
       "comparison": "comparisons/cross-system-atomicity.md",
       "dimensions": ["atomic_boundary", "durable_intent", "idempotency_key", "partial_success", "reconciliation"],
-      "members": ["redis:q14", "feast:q8"]
+      "members": ["redis:q14", "feast:q8", "flink:q5"]
+    },
+    {
+      "id": "consistent-snapshots",
+      "title": "Consistent Snapshots",
+      "summary": "Capture one recoverable logical cut while mutation continues, by preserving either prior memory or in-flight communication.",
+      "comparison": "comparisons/consistent-snapshots.md",
+      "dimensions": ["cut_marker", "concurrent_mutation", "in_flight_state", "foreground_pause", "recovery_image"],
+      "members": ["redis:q8", "flink:q4"]
+    },
+    {
+      "id": "temporal-correctness",
+      "title": "Temporal Correctness",
+      "summary": "Make a time-dependent result from incomplete and delayed evidence under an explicit knowledge boundary.",
+      "comparison": "comparisons/temporal-correctness.md",
+      "dimensions": ["decision_time", "evidence_boundary", "late_information", "progress_rule", "correction_policy"],
+      "members": ["feast:q1", "flink:q1"]
     }
   ]
 }

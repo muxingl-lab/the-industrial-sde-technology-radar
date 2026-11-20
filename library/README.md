@@ -6,6 +6,22 @@ Each row is one implementation of one problem in one service. Similar rows remai
 
 Overlap is many-to-many. A question can participate in several patterns, and every pattern can include any number of services. [`patterns.json`](patterns.json) is the canonical membership registry; comparison chapters are N-way views, never an expanding matrix of service pairs.
 
+## Stateful stream processing
+
+| Service | Problem | Primary pattern | Comparison |
+|---|---|---|---|
+| Flink | [Advance event time with out-of-order records](../flink/level-1-philosophy.md#q1-how-can-a-system-make-time-based-decisions-when-records-arrive-out-of-order) | Watermark frontier | [Temporal correctness](comparisons/temporal-correctness.md) |
+| Flink | [Bound windows, timers, and late-data state](../flink/level-1-philosophy.md#q2-how-should-time-indexed-state-be-bounded-when-late-records-are-still-possible) | Explicit fire, lateness, and cleanup boundaries | — |
+| Flink | [Partition mutable keyed state](../flink/level-1-philosophy.md#q3-how-can-many-workers-update-per-key-state-without-a-remote-lookup-for-every-record) | Stable key groups and single ownership | — |
+| Flink | [Snapshot a flowing distributed computation](../flink/level-1-philosophy.md#q4-how-can-a-distributed-computation-take-a-consistent-snapshot-while-records-keep-flowing) | Barrier-based distributed snapshot | [Consistent snapshots](comparisons/consistent-snapshots.md) |
+| Flink | [Coordinate checkpoints with external effects](../flink/level-1-philosophy.md#q5-how-can-recovered-computation-agree-with-an-external-side-effect) | Checkpoint-scoped commit | [Cross-system atomicity](comparisons/cross-system-atomicity.md) |
+| Flink | [Propagate overload through bounded buffers](../flink/level-1-philosophy.md#q6-what-should-happen-when-one-stage-produces-records-faster-than-the-next-can-consume-them) | Credit-based flow control | [Overload and backpressure](comparisons/overload-and-backpressure.md) |
+| Flink | [Serialize data and control work on one owner](../flink/level-1-philosophy.md#q7-how-can-data-processing-and-control-work-share-a-task-without-concurrent-state-mutation) | Mailbox thread confinement | [Ownership and background work](comparisons/ownership-and-background-work.md) |
+| Flink | [Recover a failed distributed dataflow](../flink/level-1-philosophy.md#q8-what-information-is-required-to-restart-a-failed-distributed-dataflow-correctly) | Checkpoint epoch and attempt fencing | — |
+| Flink | [Redistribute state after parallelism changes](../flink/level-1-philosophy.md#q9-how-can-state-move-safely-when-the-number-of-workers-changes) | Snapshot restore with typed redistribution | — |
+| Flink | [Choose live state and durable snapshot representations](../flink/level-1-philosophy.md#q10-how-should-a-stateful-service-choose-between-fast-local-access-and-scalable-durable-snapshots) | State backend separated from checkpoint storage | — |
+| Flink | [Upgrade code without losing state meaning](../flink/level-1-philosophy.md#q11-how-can-stateful-code-be-upgraded-without-losing-the-meaning-of-stored-state) | Stable identity and serializer compatibility | — |
+
 ## Memory and representation
 
 | Service | Problem | Primary pattern | Comparison |
